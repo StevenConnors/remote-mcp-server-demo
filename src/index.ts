@@ -72,6 +72,24 @@ export default {
 			return MyMCP.serve("/mcp").fetch(request, env, ctx);
 		}
 
+		// Serve HTML for the root path
+		if (url.pathname === "/") {
+			return new Response(
+				`<!DOCTYPE html>
+				<html>
+				<head>
+				  <title>Welcome to My MCP Server</title>
+				</head>
+				<body>
+				  <h1>Welcome to My MCP Server!</h1>
+				  <p>This is a simple HTML page served by your Cloudflare Worker.</p>
+				  <p>Try the <a href="/sse">/sse</a> endpoint for the MCP server.</p>
+				</body>
+				</html>`,
+				{ headers: { "content-type": "text/html" } }
+			);
+		}
+
 		return new Response("Not found", { status: 404 });
 	},
 };
