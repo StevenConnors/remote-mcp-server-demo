@@ -24,5 +24,12 @@
 	},
 	"observability": {
 		"enabled": true
-	}
+	}, 
+	"kv_namespaces": [
+		{
+			"binding": "mcp_kv",
+			"id": "56f3a8ec8c9b42808a41342b5ad6dd27",
+			"preview_id": "56f3a8ec8c9b42808a41342b5ad6dd27"
+		}
+	]
 }

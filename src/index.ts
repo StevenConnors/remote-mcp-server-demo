@@ -9,7 +9,7 @@ export class MyMCP extends McpAgent {
 		version: "1.0.0",
 	});
 
-	async init() {
+	async init(env?: any) {
 		// Simple addition tool
 		this.server.tool(
 			"add",
@@ -53,6 +53,38 @@ export class MyMCP extends McpAgent {
 						break;
 				}
 				return { content: [{ type: "text", text: String(result) }] };
+			}
+		);
+
+		// get_resume_pdf tool
+		this.server.tool(
+			"get_resume_pdf",
+			{}, // No input needed
+			async (_) => {
+				console.log({ env });
+				const pdf = await env.mcp_kv.get("resume/pdf", "arrayBuffer");
+				if (!pdf) {
+					return {
+						content: [
+							{
+								type: "text",
+								text: "Resume PDF not found.",
+							},
+						],
+					};
+				}
+				return {
+					content: [
+						{
+							type: "file",
+							file: {
+								name: "resume.pdf",
+								mime_type: "application/pdf",
+								data: pdf,
+							},
+						},
+					],
+				};
 			}
 		);
 	}
